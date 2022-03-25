@@ -1,0 +1,1 @@
+from .delegated import DelegatedCommand
