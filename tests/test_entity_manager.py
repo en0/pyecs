@@ -1,11 +1,11 @@
 from unittest import TestCase
-from pyecs import EntityManager
+from pyecs import EntityManager, EntityManagerOpts
 
 
 class EntityManagerTests(TestCase):
 
     def setUp(self):
-        self.manager = EntityManager({0b0111, 0b1100, 0b1001}, {"a", "b"})
+        self.manager = EntityManager(EntityManagerOpts({0b0111, 0b1100, 0b1001}))
         self.manager.activate_world("a")
 
     def test_worlds_are_different(self):

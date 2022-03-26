@@ -1,6 +1,5 @@
 import pygame
-from random import randint, choice
-from pyecs import EntityManager
+from pyecs import EntityManager, EntityManagerOpts
 
 
 TRANSFORM = 0b00001
@@ -61,9 +60,11 @@ def main():
     playing = True
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((800, 600))
-    manager = EntityManager({PLAYER_CONTROLLABLE, MOVEABLE_BALL, RENDERABLE}, {"default"})
-
-    manager.activate_world("default")
+    manager = EntityManager(EntityManagerOpts({
+        PLAYER_CONTROLLABLE,
+        MOVEABLE_BALL,
+        RENDERABLE
+    }))
 
     systems = [
         player_control,
@@ -71,24 +72,23 @@ def main():
         move_objects
     ]
 
-    for i in range(1000):
-        manager.spawn({
-            TRANSFORM: {"position": (randint(100, 700), randint(100, 500))},
-            CIRCLE_SPRITE: {"radius": 10, "color": (randint(155, 255), randint(155, 255), randint(155,255))},
-            BALISTIC: {"speed": randint(100, 200)},
-            CONTROLLER: {
-                "up": False,
-                "down": False,
-                "left": False,
-                "right": False
-            },
-            PLAYER_CONTROLLED: {
-                "up": choice([pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]),
-                "down": choice([pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]),
-                "left": choice([pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]),
-                "right": choice([pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]),
-            },
-        })
+    manager.spawn({
+        TRANSFORM: {"position": (400, 300)},
+        CIRCLE_SPRITE: {"radius": 10, "color": (255,255,255)},
+        BALISTIC: {"speed": 200},
+        CONTROLLER: {
+            "up": False,
+            "down": False,
+            "left": False,
+            "right": False
+        },
+        PLAYER_CONTROLLED: {
+            "up": pygame.K_UP,
+            "down":  pygame.K_DOWN,
+            "left":  pygame.K_LEFT,
+            "right": pygame.K_RIGHT,
+        },
+    })
 
     while playing:
 

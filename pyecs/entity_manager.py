@@ -1,6 +1,10 @@
-from typing import Dict, Set, Iterable, Any, List, Optional
+from typing import Dict, Set, Iterable, Any, List, NamedTuple
 from math import log
 from .typing import IEntityManager
+
+
+class EntityManagerOpts(NamedTuple):
+    component_groups: Set[int]
 
 
 class EntityCollection:
@@ -53,10 +57,9 @@ class EntityCollection:
 
 class EntityManager(IEntityManager):
 
-    def create_world(self, name: str) -> None:
-        self._worlds[name] = EntityCollection(self._groups)
-
     def activate_world(self, name: str) -> None:
+        if name not in self._worlds:
+            self._worlds[name] = EntityCollection(self._groups)
         self._active_world = self._worlds[name]
 
     def destroy_world(self, name: str) -> None:
@@ -86,10 +89,9 @@ class EntityManager(IEntityManager):
         self._counter += 1
         return self._counter
 
-    def __init__(self, component_groups: Set[int], worlds: Set[str] = None) -> None:
+    def __init__(self, opts: EntityManagerOpts) -> None:
+        component_groups = opts.component_groups.copy()
         self._counter = 0
-        self._active_world: Optional[EntityCollection] = None
+        self._active_world: EntityCollection = EntityCollection(component_groups)
         self._worlds: Dict[str, EntityCollection] = {}
-        self._groups: Set[int] = component_groups.copy()
-        for name in (worlds or []):
-            self.create_world(name)
+        self._groups: Set[int] = component_groups

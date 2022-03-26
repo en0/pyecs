@@ -1,5 +1,15 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Set, Iterable, Any
+from typing import Dict, Set, Iterable, Any, Type, Union, TypeVar
+
+
+PROVIDER_T = TypeVar("PROVIDER_T")
+
+
+class ISystem(ABC):
+
+    @abstractmethod
+    def update(self, frame_delta: float) -> None:
+        ...
 
 
 class IEntityManager(ABC):
@@ -17,10 +27,6 @@ class IEntityManager(ABC):
         ...
 
     @abstractmethod
-    def create_world(self, name: str) -> None:
-        ...
-
-    @abstractmethod
     def activate_world(self, name: str) -> None:
         ...
 
@@ -34,5 +40,36 @@ class IEntityManager(ABC):
 
     @abstractmethod
     def get_entity(self, entity_id: int) -> Dict[int, Any]:
+        ...
+
+
+class ISystemManager(ABC):
+
+    @abstractmethod
+    def install(self, system: ISystem, enabled: bool = True) -> None:
+        ...
+
+    @abstractmethod
+    def enable(self, system: Union[Type[ISystem], ISystem]) -> None:
+        ...
+
+    @abstractmethod
+    def disable(self, system: Union[Type[ISystem], ISystem]) -> None:
+        ...
+
+    @abstractmethod
+    def update(self, frame_delta: float) -> None:
+        ...
+
+
+class IGame(ABC):
+
+    @abstractmethod
+    def play(self):
+        ...
+
+
+class IObjectFactory(ABC):
+    def get_provider(self, annotation: Type[PROVIDER_T]) -> PROVIDER_T:
         ...
 
