@@ -41,8 +41,11 @@ class GameBuilder:
             pygame.Surface,
             ScopeEnum.SINGLETON)
 
-    def using_world(self, entities: List, world=None) -> None:
-        self._world_entities.append((world, entities))
+    def using_world_template(self, world: str, entities: List) -> None:
+        self._world_templates[world] = entities
+
+    def using_active_world(self, world: str) -> None:
+        self._active_world = world
 
     def using_component_groups(self, component_groups: Set[int]) -> None:
         opts = EntityManagerOpts(component_groups)
@@ -86,6 +89,9 @@ class GameBuilder:
         self._ensure_built()
         return self._factory.get_provider(IGame)
 
+    def play(self) -> None:
+        self.build().play()
+
     def _initialize_system_manager(self, factory: IObjectFactory, sm: ISystemManager):
         for sys_t in self._systems:
             sys = factory.get_provider(sys_t)
@@ -93,12 +99,10 @@ class GameBuilder:
         return sm
 
     def _initialize_worlds(self, factory: IObjectFactory, em: IEntityManager):
-        for world, entities in self._world_entities:
-            if world:
-                raise NotImplemented()
-            else:
-                for entity in entities:
-                    em.spawn(entity)
+        for world, entities in self._world_templates.items():
+            em.set_world_template(world, entities)
+        if self._active_world:
+            em.activate_world(self._active_world)
         return em
 
     def _wrap_activate(self, fn):
@@ -135,7 +139,8 @@ class GameBuilder:
         self._factory = ObjectFactory()
         self._builder = StaticContainerBuilder()
         self._ioc: Optional[Container] = None
-        self._world_entities = []
+        self._world_templates = {}
+        self._active_world = None
         self._systems = []
         self._bind_defaults()
 

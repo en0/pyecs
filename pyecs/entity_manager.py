@@ -1,4 +1,5 @@
-from typing import Dict, Set, Iterable, Any, List, NamedTuple
+from typing import Dict, Set, Iterable, Any, NamedTuple, List
+from copy import deepcopy
 from math import log
 from .typing import IEntityManager
 
@@ -58,12 +59,22 @@ class EntityCollection:
 class EntityManager(IEntityManager):
 
     def activate_world(self, name: str) -> None:
-        if name not in self._worlds:
-            self._worlds[name] = EntityCollection(self._groups)
+        self._worlds[name] = EntityCollection(self._groups)
         self._active_world = self._worlds[name]
+        for entity in self._templates.get(name, []):
+            self.spawn(deepcopy(entity))
+
+    def reactivate_world(self, name: str) -> None:
+        if name not in self._worlds:
+            self.activate_world(name)
+        else:
+            self._active_world = self._worlds[name]
 
     def destroy_world(self, name: str) -> None:
         del self._worlds[name]
+
+    def set_world_template(self, name: str, entities: List[Dict[int, Any]]):
+        self._templates[name] = entities
 
     def spawn(self, components: Dict[int, Any] = None) -> int:
         entity_id = self._get_next_entity_id()
@@ -95,3 +106,4 @@ class EntityManager(IEntityManager):
         self._active_world: EntityCollection = EntityCollection(component_groups)
         self._worlds: Dict[str, EntityCollection] = {}
         self._groups: Set[int] = component_groups
+        self._templates: Dict[str,List[Dict[int, Any]]] = {}

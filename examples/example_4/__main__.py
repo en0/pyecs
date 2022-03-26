@@ -77,18 +77,19 @@ class RenderCircle(ISystem):
 
 
 if __name__ == "__main__":
-    builder = GameBuilder()
-    builder.using_screen_mode((800, 600))
-    builder.using_system(PlayerControl)
-    builder.using_system(MoveObjects)
-    builder.using_system(RenderCircle)
-    builder.using_component_groups({
+    game = GameBuilder()
+    game.using_screen_mode((800, 600))
+    game.using_system(PlayerControl)
+    game.using_system(MoveObjects)
+    game.using_system(RenderCircle)
+    game.using_component_groups({
         PLAYER_CONTROLLABLE,
         MOVEABLE_BALL,
         RENDERABLE,
     })
 
-    builder.using_world([{
+    game.using_active_world("default")
+    game.using_world_template("default", [{
         TRANSFORM: {"position": (400, 300)},
         CIRCLE_SPRITE: {"radius": 10, "color": (255,255,255)},
         BALISTIC: {"speed": 200},
@@ -106,5 +107,4 @@ if __name__ == "__main__":
         },
     }])
 
-    game = builder.build()
     game.play()

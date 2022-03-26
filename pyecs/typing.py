@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Set, Iterable, Any, Type, Union, TypeVar
+from typing import Dict, Set, Iterable, Any, Type, Union, TypeVar, List
 
 
 PROVIDER_T = TypeVar("PROVIDER_T")
@@ -31,7 +31,15 @@ class IEntityManager(ABC):
         ...
 
     @abstractmethod
+    def reactivate_world(self, name: str) -> None:
+        ...
+
+    @abstractmethod
     def destroy_world(self, name: str) -> None:
+        ...
+
+    @abstractmethod
+    def set_world_template(self, name: str, entities: List[Dict[int, Any]]):
         ...
 
     @abstractmethod
