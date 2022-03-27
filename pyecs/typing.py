@@ -24,7 +24,11 @@ class IEntityManager(ABC):
         ...
 
     @abstractmethod
-    def add_component(self, entity_id: int, component_id: int, value: Any) -> None:
+    def add_component(self, entity: Union[int, Entity], component_id: int, value: Any) -> None:
+        ...
+
+    @abstractmethod
+    def remove_component(self, entity: Union[int, Entity], component: int) -> None:
         ...
 
     @abstractmethod

@@ -1,9 +1,9 @@
 import pygame
 from ..components import flags, models
 from ..constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from . import SPLASH
 
 
-NAME = "play_net_client"
 ENTITIES = [
 
     { # Ball
@@ -72,5 +72,12 @@ ENTITIES = [
             position=pygame.Vector2(SCREEN_WIDTH/2, 50)),
         flags.TEXT_SPRITE: models.TextSprite(
             value="0   0"),
-    }
+    },
+
+    { # Escape To Return To Splash
+        flags.SCENE_CHANGE_TRIGGER: models.SceneChangeTrigger(
+            key=pygame.K_ESCAPE,
+            to_scene=SPLASH,
+        ),
+    },
 ]

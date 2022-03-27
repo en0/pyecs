@@ -1,9 +1,9 @@
 import pygame
 from ..components import flags, models
 from ..constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from .import SPLASH
 
 
-NAME = "play_net_host"
 ENTITIES = [
 
     { # Ball
@@ -83,5 +83,12 @@ ENTITIES = [
         flags.SCORE_HUD: models.ScoreHud(
             left_score=0,
             right_score=0),
-    }
+    },
+
+    { # Escape To Return To Splash
+        flags.SCENE_CHANGE_TRIGGER: models.SceneChangeTrigger(
+            key=pygame.K_ESCAPE,
+            to_scene=SPLASH,
+        ),
+    },
 ]

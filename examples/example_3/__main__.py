@@ -113,7 +113,7 @@ if __name__ == "__main__":
     system_manager.install(MoveObjects(entity_manager, screen))
     system_manager.install(RenderCircle(entity_manager, screen))
 
-    ball_game = BallGame(entity_manager, system_manager)
+    ball_game = BallGame(entity_manager, system_manager, factory=None)
 
     ball_game.play()
 

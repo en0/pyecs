@@ -79,3 +79,9 @@ class NetSyncOut:
 class NetSyncIn:
     components: List[int]
 
+
+@dataclass
+class SceneChangeTrigger:
+    key: int
+    to_scene: str
+

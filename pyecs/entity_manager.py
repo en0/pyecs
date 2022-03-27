@@ -87,10 +87,12 @@ class EntityManager(IEntityManager):
         entity_id = entity.identity if isinstance(entity, Entity) else entity
         self._active_world.remove_entity(entity_id)
 
-    def add_component(self, entity_id: int, component_id: int, value: Any) -> None:
+    def add_component(self, entity: Union[int, Entity], component_id: int, value: Any) -> None:
+        entity_id = entity.identity if isinstance(entity, Entity) else entity
         self._active_world.add_component(entity_id, component_id, value)
 
-    def remove_component(self, entity_id: int, component: int) -> None:
+    def remove_component(self, entity: Union[int, Entity], component: int) -> None:
+        entity_id = entity.identity if isinstance(entity, Entity) else entity
         self._active_world.remove_component(entity_id, component)
 
     def get_entities(self, component_group: int) -> Iterable[Entity]:

@@ -11,12 +11,13 @@ class NetworkSystem(ISystem):
         self.counter += 1
         for net_entity in self.net_in.iter_entities():
             entity = self.em.get_entity(net_entity["identity"])
+            if entity is None:
+                continue
             for k, v in net_entity["data"].items():
                 if int(k) == flags.TRANSFORM:
                     entity[flags.TRANSFORM].position = pygame.Vector2(*v["position"])
                 elif int(k) == flags.TEXT_SPRITE:
                     entity[flags.TEXT_SPRITE].value = v["value"]
-                    print(entity, net_entity)
 
         if self.counter % 2 == 0:
             for entity in self.em.get_entities(queries.NETSYNC_OUT):

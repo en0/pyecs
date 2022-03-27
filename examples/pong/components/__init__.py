@@ -12,6 +12,7 @@ from .models import (
     Temporial,
     NetSyncOut,
     NetSyncIn,
+    SceneChangeTrigger,
 )
 
 

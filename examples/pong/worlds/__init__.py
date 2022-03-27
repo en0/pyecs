@@ -1,0 +1,2 @@
+PLAY="play"
+SPLASH="splash"
