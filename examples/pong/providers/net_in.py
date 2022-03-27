@@ -12,7 +12,7 @@ class NetworkListener(Thread):
 
     def run(self):
         srv = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-        srv.bind(("localhost", self.port))
+        srv.bind(("0.0.0.0", self.port))
         srv.setblocking(False)
         while not self.event.is_set():
             try:
