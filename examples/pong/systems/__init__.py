@@ -4,3 +4,4 @@ from .movement import MovementSystem
 from .play import PlaySystem
 from .renderer import RenderSystem
 from .temporial import TemporialSystem
+from .network import NetworkSystem

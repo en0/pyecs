@@ -15,13 +15,17 @@ class PlaySystem(ISystem):
             mov: Ballistic = entity[flags.BALLISTIC]
             if xfr.position.x < 0:
                 right_point_increase += 1
-                self.em.kill(entity)
-                self.spawn_ball(mov.force * -1)
+                xfr.position = pygame.Vector2(400, 300)
+                mov.force *= -1
+                #self.em.kill(entity)
+                #self.spawn_ball(mov.force * -1)
 
             elif xfr.position.x > SCREEN_WIDTH:
                 left_point_increase += 1
-                self.em.kill(entity)
-                self.spawn_ball(mov.force * -1)
+                xfr.position = pygame.Vector2(400, 300)
+                mov.force *= -1
+                #self.em.kill(entity)
+                #self.spawn_ball(mov.force * -1)
 
         for entity in self.em.get_entities(queries.HUD):
             text: TextSprite = entity[flags.TEXT_SPRITE]

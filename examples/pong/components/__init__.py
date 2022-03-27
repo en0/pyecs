@@ -10,6 +10,8 @@ from .models import (
     ScoreHud,
     AiController,
     Temporial,
+    NetSyncOut,
+    NetSyncIn,
 )
 
 

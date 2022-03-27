@@ -1,6 +1,6 @@
 class Entity(dict):
 
-    indentity: int = 0
+    identity: int = 0
 
     def __repr__(self):
-        return f"<Entity-{self.indentity}:{super().__repr__()}>"
+        return f"<Entity-{self.identity}:{super().__repr__()}>"

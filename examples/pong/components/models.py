@@ -1,5 +1,5 @@
 from pygame import Vector2, Color, Rect
-from typing import Tuple
+from typing import Tuple, List
 from dataclasses import dataclass
 
 
@@ -68,4 +68,14 @@ class AiController:
 @dataclass
 class Temporial:
     kill_at: int
+
+
+@dataclass
+class NetSyncOut:
+    components: List[int]
+
+
+@dataclass
+class NetSyncIn:
+    components: List[int]
 

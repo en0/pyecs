@@ -1,5 +1,5 @@
 import pygame
-from .typing import IGame, IEntityManager, ISystemManager
+from .typing import IGame, IEntityManager, ISystemManager, IObjectFactory
 
 
 class Game(IGame):
@@ -32,8 +32,9 @@ class Game(IGame):
             for e in quit_event:
                 pygame.event.post(e)
 
-    def __init__(self, entity_manager: IEntityManager, system_manager: ISystemManager):
+    def __init__(self, entity_manager: IEntityManager, system_manager: ISystemManager, factory: IObjectFactory):
         self.entity_manager = entity_manager
         self.system_manager = system_manager
+        self.factory = factory
         self.clock = pygame.time.Clock()
 

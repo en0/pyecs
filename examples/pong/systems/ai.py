@@ -46,7 +46,7 @@ class AiSystem(ISystem):
             if _mov.force.x > 0:
                 if _xfr.position.x > dist:
                     dist = _xfr.position.x
-                    poi = ball.indentity
+                    poi = ball.identity
         if not poi:
             return
 

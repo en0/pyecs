@@ -12,17 +12,17 @@ class EntityManagerOpts(NamedTuple):
 class EntityCollection:
 
     def add_entity(self, entity: Entity):
-        if entity.indentity in self._entities:
+        if entity.identity in self._entities:
             raise RuntimeError("Entity ID Collision. Abort!")
-        self._entities[entity.indentity] = entity
-        self._reverse_groups[entity.indentity] = set()
+        self._entities[entity.identity] = entity
+        self._reverse_groups[entity.identity] = set()
         group_mask = 0
         for component_id in entity.keys():
             group_mask |= component_id
         for group in self._groups:
             if (group & group_mask) == group:
-                self._groups[group].add(entity.indentity)
-                self._reverse_groups[entity.indentity].add(group)
+                self._groups[group].add(entity.identity)
+                self._reverse_groups[entity.identity].add(group)
 
     def remove_entity(self, entity_id: int) -> None:
         for group in self._reverse_groups[entity_id]:
@@ -79,12 +79,12 @@ class EntityManager(IEntityManager):
 
     def spawn(self, components: Dict[int, Any] = None) -> int:
         entity = Entity(components)
-        entity.indentity = self._get_next_entity_id()
+        entity.identity = self._get_next_entity_id()
         self._active_world.add_entity(entity)
-        return entity.indentity
+        return entity.identity
 
     def kill(self, entity: Union[int, Entity]) -> None:
-        entity_id = entity.indentity if isinstance(entity, Entity) else entity
+        entity_id = entity.identity if isinstance(entity, Entity) else entity
         self._active_world.remove_entity(entity_id)
 
     def add_component(self, entity_id: int, component_id: int, value: Any) -> None:

@@ -50,7 +50,6 @@ class MovementSystem(ISystem):
 
     def move_ball(self, frame_delta: float):
 
-        hud: ScoreHud = next(self.em.get_entities(queries.HUD))[flags.SCORE_HUD]
         for entity in self.em.get_entities(queries.BALL):
             xfr: Transform = entity[flags.TRANSFORM]
             mov: Ballistic = entity[flags.BALLISTIC]
