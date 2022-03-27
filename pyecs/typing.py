@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Set, Iterable, Any, Type, Union, TypeVar, List
+from typing import Dict, Set, Iterable, Any, Type, Union, TypeVar, List, Optional
+from .entity import Entity
 
 
 PROVIDER_T = TypeVar("PROVIDER_T")
@@ -19,7 +20,7 @@ class IEntityManager(ABC):
         ...
 
     @abstractmethod
-    def kill(self, entity_id: int) -> None:
+    def kill(self, entity_id: Union[int, Entity]) -> None:
         ...
 
     @abstractmethod
@@ -43,11 +44,11 @@ class IEntityManager(ABC):
         ...
 
     @abstractmethod
-    def get_entities(self, component_group: int) -> Iterable[Dict[int, Any]]:
+    def get_entities(self, component_group: int) -> Iterable[Entity]:
         ...
 
     @abstractmethod
-    def get_entity(self, entity_id: int) -> Dict[int, Any]:
+    def get_entity(self, entity_id: int) -> Optional[Entity]:
         ...
 
 

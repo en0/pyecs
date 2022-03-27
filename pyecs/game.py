@@ -19,6 +19,10 @@ class Game(IGame):
             self.check_for_exit()
             frame_delta = self.clock.tick(60) / 1000
             self.system_manager.update(frame_delta)
+
+            if frame_delta > 0.060:
+                print("Slow frame! Delta =", frame_delta)
+
         self.teardown()
 
     def check_for_exit(self):
