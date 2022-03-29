@@ -59,7 +59,12 @@ class EntityCollection:
 
 class EntityManager(IEntityManager):
 
+    @property
+    def active_world(self) -> Optional[str]:
+        return self._active_world_name
+
     def activate_world(self, name: str) -> None:
+        self._active_world_name = name
         self._worlds[name] = EntityCollection(self._groups)
         self._active_world = self._worlds[name]
         for entity in self._templates.get(name, []):
@@ -69,6 +74,7 @@ class EntityManager(IEntityManager):
         if name not in self._worlds:
             self.activate_world(name)
         else:
+            self._active_world_name = name
             self._active_world = self._worlds[name]
 
     def destroy_world(self, name: str) -> None:
@@ -112,3 +118,4 @@ class EntityManager(IEntityManager):
         self._worlds: Dict[str, EntityCollection] = {}
         self._groups: Set[int] = component_groups
         self._templates: Dict[str,List[Dict[int, Any]]] = {}
+        self._active_world_name = None

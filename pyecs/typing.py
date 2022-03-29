@@ -15,6 +15,11 @@ class ISystem(ABC):
 
 class IEntityManager(ABC):
 
+    @property
+    @abstractmethod
+    def active_world(self) -> Optional[str]:
+        ...
+
     @abstractmethod
     def spawn(self, components: Dict[int, Any] = None) -> int:
         ...
