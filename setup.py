@@ -11,7 +11,7 @@ with open("requirements.txt", "r") as fp:
 
 setup(
     name="pyecs",
-    version="1.0.0",
+    version="1.0.1",
     description="A pygame framwork",
     long_description=long_description,
     long_description_content_type="text/markdown",
