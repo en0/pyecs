@@ -7,7 +7,7 @@ from ..providers import NetworkInput, NetworkOutput
 
 class NetworkSystem(ISystem):
 
-    def update(self, frame_delta):
+    def update(self):
         self.counter += 1
         for net_entity in self.net_in.iter_entities():
             entity = self.em.get_entity(net_entity["identity"])

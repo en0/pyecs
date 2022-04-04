@@ -5,7 +5,7 @@ from ..components import flags, queries, PlayerController, PaddleControl, Tempor
 
 class TemporialSystem(ISystem):
 
-    def update(self, frame_delta):
+    def update(self):
         for entity in self.em.get_entities(queries.TEMPORIAL):
             life: Temporial = entity[flags.TEMPORIAL]
             if pygame.time.get_ticks() >= life.kill_at:

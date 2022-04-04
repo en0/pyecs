@@ -14,7 +14,7 @@ MOVE = 3
 
 class AiSystem(ISystem):
 
-    def update(self, frame_delta):
+    def update(self):
         for entity in self.em.get_entities(queries.NPC_PADDLE):
 
             ai: AiController = entity[flags.AI_CONTROLLER]

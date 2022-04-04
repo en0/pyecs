@@ -21,10 +21,10 @@ class SystemManager(ISystemManager):
             system = self._sys_by_type[system]
         self._disabled.add(system)
 
-    def update(self, frame_delta: float) -> None:
+    def update(self) -> None:
         for system in self._systems:
             if system not in self._disabled:
-                system.update(frame_delta)
+                system.update()
 
     def __init__(self):
         self._systems: List[ISystem] = []

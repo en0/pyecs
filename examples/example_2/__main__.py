@@ -16,7 +16,7 @@ RENDERABLE = TRANSFORM | CIRCLE_SPRITE
 
 class PlayerControl(ISystem):
 
-    def update(self, frame_delta: float):
+    def update(self):
         keys = pygame.key.get_pressed()
         for entity in self.em.get_entities(PLAYER_CONTROLLABLE):
             bindings = entity[PLAYER_CONTROLLED]
@@ -31,7 +31,8 @@ class PlayerControl(ISystem):
 
 class MoveObjects(ISystem):
 
-    def update(self, frame_delta):
+    def update(self):
+        frame_delta = self.clock.tick(60) / 1000
         for entity in self.em.get_entities(MOVEABLE_BALL):
             transform = entity[TRANSFORM]
             controller = entity[CONTROLLER]
@@ -54,10 +55,11 @@ class MoveObjects(ISystem):
     def __init__(self, em: EntityManager, screen: pygame.Surface):
         self.em = em
         self.screen = em
+        self.clock = pygame.time.Clock()
 
 
 class RenderCircle(ISystem):
-    def update(self, frame_delta):
+    def update(self):
         for entity in self.em.get_entities(RENDERABLE):
             sprite = entity[CIRCLE_SPRITE]
             transform = entity[TRANSFORM]
@@ -76,7 +78,6 @@ class RenderCircle(ISystem):
 def main():
 
     playing = True
-    clock = pygame.time.Clock()
     screen = pygame.display.set_mode((800, 600))
     system_manager = SystemManager()
     entity_manager = EntityManager(EntityManagerOpts({
@@ -109,13 +110,11 @@ def main():
 
     while playing:
 
-        frame_delta = clock.tick(60) / 1000
-
         if pygame.event.get(pygame.QUIT):
             playing = False
 
         screen.fill((0, 0, 255))
-        system_manager.update(frame_delta)
+        system_manager.update()
         pygame.display.flip()
         pygame.event.pump()
 

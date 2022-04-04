@@ -25,6 +25,7 @@ def main(host=None, client=None):
     # The game builder will simplify dependecy management.
     game = GameBuilder()
     game.using_screen_mode((800, 600))
+    game.using_clock(60)
 
     # Install the core systems
     game.using_system(InputSystem)

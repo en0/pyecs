@@ -1,6 +1,8 @@
 import pygame
 from pyecs import GameBuilder
 from pyecs.typing import ISystem, IEntityManager, ISystemManager
+from pyecs.services import ClockService, ClockServiceOpts
+from pyecs.systems import ClockSystem
 
 
 TRANSFORM = 0b00001
@@ -16,7 +18,7 @@ RENDERABLE = TRANSFORM | CIRCLE_SPRITE
 
 class PlayerControl(ISystem):
 
-    def update(self, frame_delta: float):
+    def update(self):
         keys = pygame.key.get_pressed()
         for entity in self.em.get_entities(PLAYER_CONTROLLABLE):
             bindings = entity[PLAYER_CONTROLLED]
@@ -31,7 +33,8 @@ class PlayerControl(ISystem):
 
 class MoveObjects(ISystem):
 
-    def update(self, frame_delta):
+    def update(self):
+        frame_delta = self.clock.frame_delta
         for entity in self.em.get_entities(MOVEABLE_BALL):
             transform = entity[TRANSFORM]
             controller = entity[CONTROLLER]
@@ -51,14 +54,14 @@ class MoveObjects(ISystem):
                 y + (j * frame_delta * balistic["speed"]),
             )
 
-    def __init__(self, em: IEntityManager, screen: pygame.Surface):
+    def __init__(self, em: IEntityManager, clock: ClockService):
         self.em = em
-        self.screen = em
+        self.clock = clock
 
 
 class RenderCircle(ISystem):
 
-    def update(self, frame_delta):
+    def update(self):
         self.screen.fill((0, 0, 255))
         for entity in self.em.get_entities(RENDERABLE):
             sprite = entity[CIRCLE_SPRITE]
@@ -79,6 +82,9 @@ class RenderCircle(ISystem):
 if __name__ == "__main__":
     game = GameBuilder()
     game.using_screen_mode((800, 600))
+    game.using_constant(ClockServiceOpts, ClockServiceOpts(60))
+    game.using_provider(ClockService)
+    game.using_system(ClockSystem)
     game.using_system(PlayerControl)
     game.using_system(MoveObjects)
     game.using_system(RenderCircle)

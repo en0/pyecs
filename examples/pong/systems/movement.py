@@ -1,6 +1,7 @@
 import pygame
 from typing import List
 from pyecs.typing import ISystem, IEntityManager
+from pyecs.services import ClockService
 
 from ..components import flags, queries, Transform, Ballistic, PaddleControl, RectCollider, ScoreHud
 from ..constants import SCREEN_HEIGHT, SPEED, SCREEN_WIDTH
@@ -8,8 +9,8 @@ from ..constants import SCREEN_HEIGHT, SPEED, SCREEN_WIDTH
 
 class MovementSystem(ISystem):
 
-    def update(self, frame_delta: float):
-
+    def update(self):
+        frame_delta = self.clock.frame_delta
         self.move_paddles(frame_delta)
         self.update_collision_boxes()
         self.move_ball(frame_delta)
@@ -72,9 +73,9 @@ class MovementSystem(ISystem):
                 # this isn't right but it's a start
                 mov.force *= -1
 
-    def __init__(self, em: IEntityManager):
-
+    def __init__(self, em: IEntityManager, clock: ClockService):
         self.em = em
+        self.clock = clock
         self.colliders: List[dict] = []
         self.collider_rects: List[pygame.Rect] = []
 

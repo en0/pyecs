@@ -5,7 +5,7 @@ from ..components import flags, queries, PlayerController, PaddleControl, SceneC
 
 class InputSystem(ISystem):
 
-    def update(self, frame_delta):
+    def update(self):
         pressed = pygame.key.get_pressed()
 
         for entity in self.em.get_entities(queries.SCENE_CHANGE_TRIGGER):

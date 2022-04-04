@@ -6,7 +6,7 @@ from ..components import flags, queries, Transform, CircleSprite, RectSprite, Te
 
 class RenderSystem(ISystem):
 
-    def update(self, frame_delta: float):
+    def update(self):
 
         self.screen.fill((66, 66, 66))
         self.render_circles()

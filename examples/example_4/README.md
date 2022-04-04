@@ -86,7 +86,7 @@ Here is an example of a constructor parameter used inside a ISystem.
 ```
 class MySystem(ISystem):
 
-    def update(self, frame_delta):
+    def update(self):
         ...
 
     def __init__(self, provider_1: Provider1)

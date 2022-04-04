@@ -2,12 +2,11 @@
 
 This example demonstrates how use the built-in `Game` class to simplify the game loop.
 
-The `Game` class provides 4 things.
+The `Game` class provides 3 things.
 
-1. Keeps track of the frame delay.
-2. Executes the `SystemManager`'s update(...) method.
-3. Monitors `pygame.event`s for an exit signal.
-4. Holds references to other game classes like the `EntityManager`.
+1. Executes the `SystemManager`'s update(...) method.
+2. Monitors `pygame.event`s for an exit signal.
+3. Holds references to other game classes like the `EntityManager`.
 
 ## Creating A Game
 

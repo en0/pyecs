@@ -29,8 +29,8 @@ Here is an example of a simple system.
 from pyecs.typing import ISystem
 
 class ExampleSystem(ISystem):
-    def update(self, frame_delta: float):
-        print(f"The last frame to {frame_delta} seconds.")
+    def update(self):
+        print("Frame Update")
 ```
 
 This is great but not to useful. The above example cannot interact with game objects which is pretty
@@ -40,7 +40,7 @@ important for writting game logic.  Lets fix that.
 from pyecs.typing import ISystem, ISystemManager
 
 class ExampleSystem(ISystem):
-    def update(self, frame_delta: float):
+    def update(self):
         for entity in self.em.get_entities(SOME_QUERY):
             print(f"Look, a game object: {entity}")
 
@@ -72,8 +72,7 @@ loop that will never exit. but you can see more in the demo.
 
 ```
 while True:
-    delay = get_frame_delay()
-    system_manager.update(delay)
+    system_manager.update()
 ```
 
 And that's it.  In the next example, we will demonstrate a better approach to the game loop.

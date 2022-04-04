@@ -6,7 +6,7 @@ from ..constants import SCREEN_WIDTH
 
 class PlaySystem(ISystem):
 
-    def update(self, frame_delta: float):
+    def update(self):
 
         left_point_increase, right_point_increase = 0, 0
 
