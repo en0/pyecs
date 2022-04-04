@@ -18,7 +18,7 @@ setup(
     author="Ian Laird",
     author_email="irlaird@gmail.com",
     url="https://github.com/en0/pyecs",
-    packages=["pyecs"],
+    packages=["pyecs", "pyecs.services", "pyecs.systems"],
     install_requires=install_requires,
     classifiers=[
         "Programming Language :: Python :: 3.8",
